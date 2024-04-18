@@ -413,5 +413,95 @@ target_compile_definitions(my_project PRIVATE "-DLOG_LEVEL=2")
 
 위와 같이 sub_directory로 `CMake` 파일을 만들게 되면 `build` 파일의 `src` 파일 안에 library 파일과 executable 파일이 들어간 것을 확인하실 수 있습니다.
 
+이는 자동으로 배치된 위치지만, 우리가 원하는 위치에 해당 파일들을 위치시킬 수 있는 방법이 있습니다.
+
+```cmake
+# Set the location of library file
+# ARCHIVE_OUTPUT_DIRECTORY means the location of static library
+# LIBRARY_OUTPUT_DIRECTORY means the location of dynamic library
+set_target_properties(my_library PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/lib"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/lib"
+)
+# Set the location of binary file
+set_target_properties(my_project PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/bin"
+)
+```
+
+`set_target_properties` 명령어를 이용하여 `ARCHIVE_OUTPUT_DIRECTORY`, `LIBRARY_OUTPUT_DIRECTORY`를 이용하면 .a 파일이나 .so 파일의 위치를 지정할 수 있으며, `RUNTIME_OUTPUT_DIRECTORY`를 이용하면 binary 파일의 위치를 지정할 수 있습니다.
+
+
+
+## 외부 Library 사용법 
+
+`TCL`, `GTest`, `OpenSSL`, `Glog`, `Doxygen` 등 현대 외부 라이브러리들은 대부분 CMake를 지원합니다. 시스템에 해당 라이브러리가 설치되어 있다면, `find_package`라는 CMake 명령어로 손 쉽게 연결이 가능합니다.
+
+예를들어 데비안 계열 (ex. Ubuntu)에서는 다음과 같이 시스템에 설치할 수 있습니다.
+
+```shell
+sudo apt-get update
+sudo apt-get install libgtest-dev libglog-dev libssl-dev tcl-dev doxygen
+```
+
+페도라 계열 (ex. RHEL, CentOS)은 다음과 같이 시스템에 설치할 수 있습니다.
+
+```shell
+sudo dnf update
+sudo dnf install gtest gtest-devel glog glog-devel openssl openssl-devel tcl tcl-devel doxygen
+```
+
+Mac에서는 brew를 이용하여 다음과 같이 설치할 수 있습니다.
+
+```shell
+brew update
+brew install gtest glog openssl tcl-tk doxygen
+```
+
+외부 라이브러리 사용법을 위하여 TCL과 Google Test라는 외부 패키지를 이용하는 것으로 예시를 들어보도록 하겠습니다.
+
+### TCL Importing
+
+CMake 파일에서 다음과 같이 find_package를 하여 Import를 한 후, `link_libraries`에 [설정된 변수](https://cmake.org/cmake/help/latest/module/FindTCL.html)인 `${TCL_LIBRARY}`를 작성해주면 바로 사용할 수 있습니다.
+
+```cmake
+# Load the package from the system
+# By REQUIRED option, if it is not able to find the tcl in the system, then the loading cmake will be stopped.
+find_package(TCL REQUIRED)
+# Link binary and library
+target_link_libraries(my_project
+        PUBLIC
+        my_library
+        ${TCL_LIBRARY}
+)
+```
+
+> 특정 라이브러리는 완전한 사용을 위해 동적 컴파일링이 디폴트로 되어있을 수 있습니다. 따라서 `target_link_options(my_project PRIVATE "-static")`와 같은 명령어와 함께 빌드 하였을 때 에러가 날 수 있습니다. 
+>
+> 이를 위해서, find_package를 사용하지 않고 직접적인 경로를 이용하여 정적 컴파일링을 다음과 같이 수행할 수 있습니다.
+>
+> ```cmake
+> # Link binary and library
+> target_link_libraries(my_project
+>         PUBLIC
+>         my_library
+>         /usr/lib/x86_64-linux-gnu/libtcl8.6.a z m dl # for static linking
+> )
+> 
+> # Set link option
+> target_link_options(my_project PRIVATE "-static")
+> ```
+>
+> 이렇게 빌드를 하면 `TclpDlopen`, `TclpGetGrGid`등의 함수는 사용하지 못한다는 경고 메시지와 함께 컴파일이 되지만, 해당 함수를 사용하지만 않는다면 완전한 static build가 가능해집니다.
+>
+> ```shell
+> $ ldd out/bin/my_project 
+>         동적 실행 파일이 아닙니다
+> ```
+
+
+
+
+
 
 
