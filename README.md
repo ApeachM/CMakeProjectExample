@@ -290,3 +290,62 @@ target_link_libraries(my_project my_static_library)
 # 또는 동적 라이브러리를 연결하는 경우
 target_link_libraries(my_project my_shared_library)
 ```
+
+## Flags
+
+CMake에서 Flag는 크게 컴파일을 위한 Flag와 링킹에 대한 Flag로 나뉠 수 있습니다.
+
+### Linking Flag
+
+#### 전역 설정
+
+```cmake
+add_link_options("-static")
+```
+
+다음과 같이 하면 전체 프로젝트에 대해 "-static"이 link flag로 적용됩니다. 하지만 이는 전역에 대한 설정이므로, 위와 같이 추천드리지 않습니다.
+
+#### 타겟 설정
+
+```cmake
+target_link_options(my_project PRIVATE "-static")
+```
+
+다음과 같이 하면 `cmake --build build`를 하여 빌드 할 때에 `my_library` 라이브러리와 static으로 빌드가 가능해집니다.
+
+### Compile Flag
+
+#### 전역 설정
+
+```cmake
+add_compile_options("-Wall" "-O2")
+```
+
+다음과 같이 하면 전체 프로젝트에 대해 "-Wall"과 "-O2"가 compile flag로 적용됩니다. 하지만 이는 전역에 대한 설정이므로, 위와 같이 추천드리지 않습니다.
+
+#### 타겟 설정
+
+```cmake
+target_compile_options(my_project PRIVATE "-Wall" "-O2")
+```
+
+다음과 같이 하면 `cmake --build build`를 하여 빌드 할 때에 `my_project` binary 컴파일시 해당 플래그와 함께 컴파일 되어, 컴파일 경고메시지를 출력하며 최적화 수준을 2로 맞춰줍니다.
+
+## Compile Definition
+
+### 전역 설정
+
+```cmake
+add_compile_definitions("-DLOG_LEVEL=2") 
+```
+
+다음과 같이 하면 전체 프로젝트에 대해 "LOG_LEVEL=2"가 compile flag로 적용됩니다. 하지만 이는 전역에 대한 설정이므로, 위와 같이 추천드리지 않습니다.
+
+### 타겟 설정
+
+```cmake
+target_compile_definitions(my_project PRIVATE "-DLOG_LEVEL=2")
+```
+
+다음과 같이 하면 `cmake --build build`를 하여 빌드 할 때에 `my_project` binary 컴파일시 해당 definition과 함께 컴파일 되어, 전처리시 코드 내에 특정 값을 주입할 수 있습니다.
+
