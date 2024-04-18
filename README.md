@@ -349,3 +349,65 @@ target_compile_definitions(my_project PRIVATE "-DLOG_LEVEL=2")
 
 다음과 같이 하면 `cmake --build build`를 하여 빌드 할 때에 `my_project` binary 컴파일시 해당 definition과 함께 컴파일 되어, 전처리시 코드 내에 특정 값을 주입할 수 있습니다.
 
+네, 맞습니다. `add_subdirectory` 명령어를 사용하여 프로젝트 내에서 다른 디렉토리를 추가하고 그 안의 `CMakeLists.txt` 파일을 포함시키는 과정은 CMake를 이용한 프로젝트 모듈화의 일환으로 볼 수 있습니다. 이 방식은 프로젝트의 구조를 더 명확하게 나누고, 재사용 가능한 컴포넌트나 라이브러리를 관리하기 위한 효율적인 방법을 제공합니다.
+
+## CMake 프로젝트 모듈화 
+
+###  장점
+
+1. **재사용성**: 특정 기능이나 라이브러리를 별도의 디렉토리에 구성함으로써, 이를 다른 프로젝트에서도 쉽게 재사용할 수 있습니다.
+2. **유지보수성**: 프로젝트의 각 부분을 분리함으로써, 코드의 유지보수가 용이해집니다. 오류 수정, 기능 추가 또는 변경 시 해당 모듈만을 대상으로 작업할 수 있어 전체 프로젝트의 안정성을 유지할 수 있습니다.
+3. **가독성 및 관리 용이성**: 큰 프로젝트를 더 작은 단위로 분리함으로써, 프로젝트의 구조를 더 쉽게 이해하고 관리할 수 있습니다.
+
+### add_subdirectory 사용 예시
+
+최상위 `CMakeLists.txt` 파일:
+```cmake
+cmake_minimum_required(VERSION 3.20)
+project(CppProjectTemplate)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+add_subdirectory(src)
+```
+
+`src/CMakeLists.txt` 파일:
+
+```cmake
+# Make executable file (target)
+add_executable(my_project
+        src/main.cpp
+)
+
+# Make library (target)
+add_library(my_library
+        STATIC
+        myFunction.cpp
+)
+target_include_directories(my_library
+        PUBLIC
+        ${CMAKE_SOURCE_DIR}/src
+)
+
+# Link binary and library
+target_link_libraries(my_project
+        PUBLIC
+        my_library
+)
+
+# Set link option
+target_link_options(my_project PRIVATE "-static")
+
+# Set compile option
+target_compile_options(my_project PRIVATE "-Wall" "-O2")
+
+# Set compile definitions
+target_compile_definitions(my_project PRIVATE "-DLOG_LEVEL=2")
+```
+
+- 이 예시에서는 `add_subdirectory`를 사용하여 메인 프로젝트의 `CMakeLists.txt` 파일에서 `src` 디렉토리의 `CMakeLists.txt` 파일을 포함시킵니다. 해당 행위는 라이브러리 단위로 프로젝트를 쪼갤 때 쓰기 더욱 좋습니다.
+- `${CMAKE_SOURCE_DIR}` 변수는 최상위 `CMake`파일의 위치를 나타냅니다. 현재 `CMakeList.txt ` 파일의 위치를 나타내고 싶다면 `${CMAKE_CURRENT_SOURCE_DIR}` 변수를 사용하면 되며, 해당과 같은 기본 변수들은 이후 섹션에서 소개시켜드리겠습니다.
+
+
+
