@@ -6,5 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # find package
 find_package(TCL REQUIRED)
+find_package(GTest REQUIRED)
 
 add_subdirectory(src)
+add_subdirectory(test)
