@@ -409,5 +409,9 @@ target_compile_definitions(my_project PRIVATE "-DLOG_LEVEL=2")
 - 이 예시에서는 `add_subdirectory`를 사용하여 메인 프로젝트의 `CMakeLists.txt` 파일에서 `src` 디렉토리의 `CMakeLists.txt` 파일을 포함시킵니다. 해당 행위는 라이브러리 단위로 프로젝트를 쪼갤 때 쓰기 더욱 좋습니다.
 - `${CMAKE_SOURCE_DIR}` 변수는 최상위 `CMake`파일의 위치를 나타냅니다. 현재 `CMakeList.txt ` 파일의 위치를 나타내고 싶다면 `${CMAKE_CURRENT_SOURCE_DIR}` 변수를 사용하면 되며, 해당과 같은 기본 변수들은 이후 섹션에서 소개시켜드리겠습니다.
 
+## Binary File 및 Library File 위치 지정
+
+위와 같이 sub_directory로 `CMake` 파일을 만들게 되면 `build` 파일의 `src` 파일 안에 library 파일과 executable 파일이 들어간 것을 확인하실 수 있습니다.
+
 
 
