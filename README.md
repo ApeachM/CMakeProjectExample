@@ -237,5 +237,56 @@ target_include_directories(my_project
 
 이 변경을 통해, 프로젝트의 코드 구조가 더욱 명확해지고, 함수들이 별도의 파일로 관리됨으로써 코드의 재사용성과 유지보수성이 향상됩니다.
 
+## Library 생성
+
+라이브러리를 생성하고 관리하는 것은 CMake를 사용한 프로젝트 개발의 중요한 부분입니다. 라이브러리를 사용하면 코드의 재사용성을 높이고, 모듈성을 개선하며, 빌드 시간을 최적화할 수 있습니다. CMake에서는 두 가지 주요 유형의 라이브러리를 생성할 수 있습니다: 정적 라이브러리(Static libraries)와 동적 라이브러리(Shared libraries). 여기서는 각각의 생성 방법과 사용 예를 다루겠습니다.
+
+### 정적 라이브러리(Static Library)
+
+정적 라이브러리는 `.a` 또는 `.lib` 파일로 컴파일되며, 프로그램을 빌드할 때 코드가 직접 프로그램에 포함됩니다. 정적 라이브러리는 실행 파일의 크기를 증가시키지만, 외부 라이브러리에 대한 의존성을 줄이고 배포를 단순화할 수 있습니다.
+
+CMake에서 정적 라이브러리를 생성하는 예시:
+
+```cmake
+add_library(my_static_library STATIC
+    src/LibraryCode.cpp
+)
+```
+
+### 동적 라이브러리(Shared Library)
+
+동적 라이브러리는 `.so`, `.dll` 또는 `.dylib` 파일로 컴파일되며, 프로그램 실행 시 로드됩니다. 동적 라이브러리를 사용하면 실행 파일의 크기를 줄일 수 있고, 여러 프로그램이 동일한 라이브러리 인스턴스를 공유할 수 있습니다.
+
+CMake에서 동적 라이브러리를 생성하는 예시:
+
+```cmake
+add_library(my_shared_library SHARED
+    src/LibraryCode.cpp
+)
+```
 
 
+### 라이브러리의 헤더 파일 포함
+
+라이브러리를 사용하는 프로젝트 또는 다른 라이브러리에서 해당 라이브러리의 헤더 파일에 접근할 수 있도록 설정해야 합니다. 이는 `target_include_directories`를 사용하여 라이브러리 타겟에 대해 수행할 수 있습니다.
+
+```cmake
+target_include_directories(my_static_library PUBLIC
+    ${PROJECT_SOURCE_DIR}/include
+)
+```
+
+
+### 라이브러리와 실행 파일 연결하기
+
+라이브러리를 생성한 후, 실행 파일과 연결해야 합니다. `target_link_libraries` 명령을 사용하여 이를 수행할 수 있습니다. 예를 들어, 위에서 생성한 `my_static_library` 또는 `my_shared_library`를 `my_project` 실행 파일과 연결하는 방법은 다음과 같습니다:
+
+```cmake
+add_executable(my_project src/main.cpp)
+
+# 정적 라이브러리를 연결하는 경우
+target_link_libraries(my_project my_static_library)
+
+# 또는 동적 라이브러리를 연결하는 경우
+target_link_libraries(my_project my_shared_library)
+```
