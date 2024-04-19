@@ -499,7 +499,29 @@ target_link_libraries(my_project
 >         동적 실행 파일이 아닙니다
 > ```
 
+### DoxyGen Importing
 
+```cmake
+find_package(Doxygen REQUIRED)
+# Configure the Doxygen input and output directories
+set(
+        DOXYGEN_INPUT_DIRS
+        "${CMAKE_SOURCE_DIR}/src"
+)
+set(DOXYGEN_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/docs")
+
+# Set Doxygen configuration options
+set(DOXYGEN_GENERATE_HTML YES)
+set(DOXYGEN_GENERATE_MAN NO)
+set(DOXYGEN_OUTPUT_DIRECTORY ${DOXYGEN_OUTPUT_DIR})
+
+# Add a target for generating Doxygen documentation
+doxygen_add_docs(
+        doxygen_docs
+        ${DOXYGEN_INPUT_DIR}
+        COMMENT "Generate Doxygen documentation"
+)
+```
 
 
 
