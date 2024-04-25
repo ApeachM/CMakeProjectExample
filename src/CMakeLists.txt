@@ -21,19 +21,6 @@ target_link_libraries(my_project
 )
 
 
-# Set link option
-#add_link_options("-static")  # global setting
-#target_link_options(my_project PRIVATE "-static")
-
-# Set compile option
-#add_compile_options(-Wall -O2) # global setting
-target_compile_options(my_project PRIVATE "-Wall" "-O2")
-
-# Set compile definitions
-#add_compile_definitions("-DLOG_LEVEL=2") # global setting
-target_compile_definitions(my_project PRIVATE "-DLOG_LEVEL=2")
-
-
 # Set the location of library file
 # ARCHIVE_OUTPUT_DIRECTORY means the location of static library
 # LIBRARY_OUTPUT_DIRECTORY means the location of dynamic library
