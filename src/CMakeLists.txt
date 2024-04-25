@@ -21,15 +21,4 @@ target_link_libraries(my_project
 )
 
 
-# Set the location of library file
-# ARCHIVE_OUTPUT_DIRECTORY means the location of static library
-# LIBRARY_OUTPUT_DIRECTORY means the location of dynamic library
-set_target_properties(my_library PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/lib"
-        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/lib"
-)
-# Set the location of binary file
-set_target_properties(my_project PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/bin"
-)
 

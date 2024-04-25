@@ -9,9 +9,3 @@ target_link_libraries(
         GTest::gtest
         GTest::gtest_main
 )
-
-
-# Set the location of binary file
-set_target_properties(my_tests PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/bin"
-)
