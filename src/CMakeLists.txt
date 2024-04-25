@@ -18,8 +18,6 @@ target_include_directories(my_library
 target_link_libraries(my_project
         PUBLIC
         my_library
-        ${TCL_LIBRARY}
-        # /usr/lib/x86_64-linux-gnu/libtcl8.6.a z m dl # for static linking
 )
 
 
