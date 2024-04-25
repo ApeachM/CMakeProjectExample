@@ -18,3 +18,10 @@ target_link_libraries(
         GTest::gtest
         GTest::gtest_main
 )
+
+include(CTest)
+# To use gtest_discover_test function
+include(GoogleTest)
+# find the test cases automatically and execute them
+gtest_discover_tests(my_function_tests)
+gtest_discover_tests(my_class_tests)
