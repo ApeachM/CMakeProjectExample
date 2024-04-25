@@ -503,6 +503,8 @@ target_link_libraries(my_project
 
 ### DoxyGen Importing
 
+아래와 같이 CMakeList.txt에 Doxygen 라이브러리를 찾아 준 다음에, Doxygen을 위한 변수들을 설정해준 뒤 build를 하면 코드에 대한 문서가 생성됩니다.
+
 ```cmake
 find_package(Doxygen REQUIRED)
 # Configure the Doxygen input and output directories
@@ -524,8 +526,3 @@ doxygen_add_docs(
         COMMENT "Generate Doxygen documentation"
 )
 ```
-
-
-
-
-
