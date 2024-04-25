@@ -7,6 +7,7 @@ add_executable(my_project
 add_library(my_library
         STATIC
         myFunction.cpp
+        myClass.cpp
 )
 # Let the library and executable file (by PUBLIC OPTION) know the header file's location
 target_include_directories(my_library
