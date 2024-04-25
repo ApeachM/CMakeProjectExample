@@ -30,6 +30,14 @@ CMake는 현대적인 소프트웨어 개발 환경에서 필수적인 도구 �
 
 ## 가장 간단한 CMake 파일의 예시
 
+### Commit Version
+
+> 아래 커밋으로 Check Out 하시면 현재 섹션을 Run할 수 있습니다.
+>
+
+- Hash Value: ` a9c13693`
+- Commit Name: [ADD] Add the most simple example for `CMakeLists.txt`
+
 ### CMakeFile.txt 파일
 
 **CMakeLists.txt** 파일은 CMake 프로젝트의 설정 파일로, 프로젝트의 빌드 방식을 정의합니다. 다음은 간단한 C++ 프로젝트를 위한 기본적인 CMake 구성 예시입니다:
@@ -188,6 +196,11 @@ bash ./runCMake.sh
 
 프로젝트의 구조를 변경하여 기능을 별도의 파일로 분리하고, 이를 CMake를 사용해 빌드하는 과정을 안내 드리겠습니다. 이 변경은 코드의 모듈성을 향상시키고, 재사용성을 높이며, 프로젝트의 관리를 용이하게 합니다. CMake 구성 파일을 업데이트하여 이러한 구조 변경을 반영하는 방법을 아래에 설명하겠습니다.
 
+### Commit Version
+
+- Hash Value: `7db0e8f2`
+- Commit Name: [ADD] Add the explanation for `target_include_libraries`
+
 ### 프로젝트 파일 구조 변경
 
 기존에는 `main.cpp` 파일 내에 모든 코드가 포함되어 있었습니다. 이제는 `add` 함수와 `subtract` 함수를 `myFunction.cpp`와 `myFunction.h` 파일로 분리하여, 함수의 정의와 선언을 별도의 파일에 위치시킵니다. 헤더파일은 헤더파일 경로 설정의 예시를 위하여 `includ` 폴더 안에 위치하도록 하겠습니다. 이렇게 하면, 함수들을 다른 파일에서도 쉽게 재사용할 수 있게 됩니다.
@@ -236,6 +249,11 @@ target_include_directories(my_project
 ## Library 생성
 
 라이브러리를 생성하고 관리하는 것은 CMake를 사용한 프로젝트 개발의 중요한 부분입니다. 라이브러리를 사용하면 코드의 재사용성을 높이고, 모듈성을 개선하며, 빌드 시간을 최적화할 수 있습니다. CMake에서는 두 가지 주요 유형의 라이브러리를 생성할 수 있습니다: 정적 라이브러리(Static libraries)와 동적 라이브러리(Shared libraries). 여기서는 각각의 생성 방법과 사용 예를 다루겠습니다.
+
+### Commit Version
+
+- Hash Value: `ed6bd6b4`
+- Commit Name: [ADD] Add the explanation for `add_library` and `target_link_libraries` 
 
 ### 정적 라이브러리(Static Library)
 
@@ -290,6 +308,11 @@ target_link_libraries(my_project my_shared_library)
 ## Flags
 
 CMake에서 Flag는 크게 컴파일을 위한 Flag와 링킹에 대한 Flag로 나뉠 수 있습니다.
+
+### Commit Version
+
+- Hash Value: `c6f8dd2f`
+- Commit Name: [ADD] Add the explanation for options and definitions for `CMake` 
 
 ### Linking Flag
 
@@ -349,6 +372,11 @@ target_compile_definitions(my_project PRIVATE "-DLOG_LEVEL=2")
 
 ## CMake 프로젝트 모듈화 
 
+### Commit Version
+
+- Hash Value: `fa038613`
+- Commit Name: [ADD] Add the explanation for `add_subdirectory` 
+
 ###  장점
 
 1. **재사용성**: 특정 기능이나 라이브러리를 별도의 디렉토리에 구성함으로써, 이를 다른 프로젝트에서도 쉽게 재사용할 수 있습니다.
@@ -407,6 +435,13 @@ target_compile_definitions(my_project PRIVATE "-DLOG_LEVEL=2")
 
 ## Binary File 및 Library File 위치 지정
 
+### Commit Version
+
+- Hash Value: `fe50ed01`
+- Commit Name: [ADD] Add the explanation for `OUTPUT_DIRECTORY` 
+
+### CMake 설정 방법
+
 위와 같이 sub_directory로 `CMake` 파일을 만들게 되면 `build` 파일의 `src` 파일 안에 library 파일과 executable 파일이 들어간 것을 확인하실 수 있습니다.
 
 이는 자동으로 배치된 위치지만, 우리가 원하는 위치에 해당 파일들을 위치시킬 수 있는 방법이 있습니다.
@@ -430,6 +465,13 @@ set_target_properties(my_project PROPERTIES
 
 
 ## 외부 Library 사용법 
+
+### Commit Version
+
+- Hash Value: `1a14fd00`
+- Commit Name: [ADD] Add the explanation for importing external package with `find_package` 
+
+### 사용전 외부 Library 설치 방법
 
 `TCL`, `GTest`, `OpenSSL`, `Glog`, `Doxygen` 등 현대 외부 라이브러리들은 대부분 CMake를 지원합니다. 시스템에 해당 라이브러리가 설치되어 있다면, `find_package`라는 CMake 명령어로 손 쉽게 연결이 가능합니다.
 
@@ -496,6 +538,8 @@ target_link_libraries(my_project
 > ```
 
 ### DoxyGen Importing
+
+**Commit Version**: [ADD] Add Example for Doxygen `09dd8a88`
 
 아래와 같이 CMakeList.txt에 Doxygen 라이브러리를 찾아 준 다음에, Doxygen을 위한 변수들을 설정해준 뒤 build를 하면 코드에 대한 문서가 생성됩니다.
 
