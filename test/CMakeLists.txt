@@ -25,3 +25,6 @@ include(GoogleTest)
 # find the test cases automatically and execute them
 gtest_discover_tests(my_function_tests)
 gtest_discover_tests(my_class_tests)
+
+
+add_test(NAME cTestCase1 COMMAND sh -c "sleep 1")
