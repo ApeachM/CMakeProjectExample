@@ -28,3 +28,4 @@ gtest_discover_tests(my_class_tests)
 
 
 add_test(NAME cTestCase1 COMMAND sh -c "sleep 1")
+add_test(NAME cTestCase2 COMMAND sh -c "sleep 2")
